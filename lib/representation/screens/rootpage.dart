@@ -4,6 +4,7 @@ import 'package:happy_tech_mastering_api_with_flutter/representation/screens/hom
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/Buses_page.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/Map_page.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/Report_page.dart';
+import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/SosPage.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/alerts_page.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/guide_page.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/widgets/drawer.dart';
@@ -71,22 +72,30 @@ class _RootPageState extends State<RootPage> {
         ),
         centerTitle: true,
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: Container(
-              width: 35,
-              height: 40,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(0xFFFF4444),
+          GestureDetector(
+            onTap: () { Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>  SosScreen(),
               ),
-              child: const Center(
-                child: Text(
-                  'SOS',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
+            ); },
+            child: Padding(
+              padding: const EdgeInsets.only(right: 16.0),
+              child: Container(
+                width: 35,
+                height: 40,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color(0xFFFF4444),
+                ),
+                child: const Center(
+                  child: Text(
+                    'SOS',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),

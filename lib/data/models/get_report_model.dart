@@ -6,9 +6,9 @@ class ReportModel {
   final String category;
   final String latitude;
   final String longitude;
-  final String phone;
   final String image;
   final String video;
+  final String user;
 
   ReportModel({
     required this.id,
@@ -18,9 +18,10 @@ class ReportModel {
     required this.category,
     required this.latitude,
     required this.longitude,
-    required this.phone,
     required this.image,
     required this.video,
+    required this.user,
+
   });
 
   factory ReportModel.fromJson(Map<String, dynamic> json) {
@@ -32,9 +33,9 @@ class ReportModel {
       category: json['category'] ?? '',
       latitude: json['latitude'] ?? '',
       longitude: json['longitude'] ?? '',
-      phone: json['phone'] ?? '',
       image: json['image'] ?? '',
       video: json['video'] ?? '',
+      user: json['user'] ?? '',
     );
   }
 }

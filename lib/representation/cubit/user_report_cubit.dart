@@ -23,54 +23,54 @@ class ReportCubit extends Cubit<ReportState> {
   XFile? reportImage;
   XFile? reportVideo;
 
-  // Method to create a new report
-    createReport() async {
-      try {
-        emit(ReportLoading());
-        final response = await api.post(
-          EndPoint.reports, // Endpoint for creating a report
-          isFromData: true,
-          data: {
-            ApiKey.title: reportTitle.text,
-            ApiKey.description: reportDescription.text,
-            ApiKey.severity: reportSeverity.text,
-            ApiKey.category: reportCategory.text,
-            ApiKey.latitude: latitude.text,  
-            ApiKey.longitude: longitude.text,
-            ApiKey.user: reportPhone.text,
-            // Include image and video if available
-            ApiKey.image: reportImage != null ? reportImage!.path : null,
-            ApiKey.video: reportVideo != null ? reportVideo!.path : null,
-          },
-        );
+  Future<void> createReport() async {
+    if (!reportFormKey.currentState!.validate()) {
+      emit(ReportFailure(errMessage: 'Please fill all required fields'));
+      return;
+    }
+
+    try {
+      emit(ReportLoading());
+      final response = await api.post(
+        EndPoint.reports,
+        isFromData: true,
+        data: {
+          ApiKey.title: reportTitle.text,
+          ApiKey.description: reportDescription.text,
+          ApiKey.severity: reportSeverity.text,
+          ApiKey.category: reportCategory.text,
+          ApiKey.latitude: latitude.text,  
+          ApiKey.longitude: longitude.text,
+          ApiKey.image: reportImage != null ? await reportImage!.readAsBytes() : null,
+          ApiKey.video: reportVideo != null ? await reportVideo!.readAsBytes() : null,
+          ApiKey.user: reportPhone.text,
+        },
+      );
 
       final reportModel = ReportModel.fromJson(response); 
       emit(ReportSuccess(message: reportModel.description));
     } on ServerException catch (e) {
-      print("========================");
-      print(e.errModel.errorMessage);
-      print("========================");
       emit(ReportFailure(errMessage: e.errModel.errorMessage));
+    } catch (e) {
+      emit(ReportFailure(errMessage: 'An unexpected error occurred'));
     }
   }
 
-  // Method to pick image
   Future<void> pickImage() async {
     final ImagePicker _picker = ImagePicker();
     final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       reportImage = pickedFile;
-      emit(ReportImagePicked());  // Create a new state for image picked
+      emit(ReportImagePicked());
     }
   }
 
-  // Method to pick video
   Future<void> pickVideo() async {
     final ImagePicker _picker = ImagePicker();
     final XFile? pickedFile = await _picker.pickVideo(source: ImageSource.gallery);
     if (pickedFile != null) {
       reportVideo = pickedFile;
-      emit(ReportVideoPicked());  // Create a new state for video picked
+      emit(ReportVideoPicked());
     }
   }
 }

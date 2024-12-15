@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
           labelLarge: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
         ),
       ),
-      home: ReportScreen(),
+      home: RootPage(),
     );
   }
 }
