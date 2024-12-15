@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/rootpage.dart';
+import 'package:happy_tech_mastering_api_with_flutter/representation/screens/sign_up_screen.dart';
 
 import '../cubit/user_cubit.dart';
 import '../cubit/user_state.dart';
-
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -227,7 +227,13 @@ class SignInScreen extends StatelessWidget {
                                       ),
                                       TextButton(
                                         onPressed: () {
-                                          // Navigate to Sign-up Screen
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const SignUpScreen(),
+                                            ),
+                                          );
                                         },
                                         child: const Text(
                                           "S'inscrire",
