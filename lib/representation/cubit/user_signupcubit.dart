@@ -19,6 +19,11 @@ class SignUpCubit extends Cubit<UserState> {
   TextEditingController signUpEmail = TextEditingController();
   TextEditingController signUpLocation = TextEditingController();
   TextEditingController signUpPassword = TextEditingController();
+  TextEditingController longitude = TextEditingController();
+  TextEditingController latitude = TextEditingController();
+  TextEditingController SignupPhone = TextEditingController();
+  TextEditingController Matricule = TextEditingController();
+  
 
   signUp() async {
     try {
@@ -27,11 +32,13 @@ class SignUpCubit extends Cubit<UserState> {
         EndPoint.signUp,
         isFromData: true,
         data: {
-          ApiKey.name: signUpName.text,
-          ApiKey.firstname: signUpFirstname.text,
-          ApiKey.lastname: signUpLastname.text,
-          ApiKey.email: signUpEmail.text,
+          ApiKey.nom: signUpName.text,
+          ApiKey.prenom: signUpFirstname.text,
+          ApiKey.matricule: Matricule.text,
           ApiKey.password: signUpPassword.text,
+          ApiKey.longitude: "11",
+          ApiKey.latitude: "22",
+          ApiKey.phone: SignupPhone.text,
           ApiKey.is_active: true,
         },
       );

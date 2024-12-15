@@ -15,7 +15,7 @@ class SignInCubit extends Cubit<UserState> {
   final ApiConsumer api;
 
   GlobalKey<FormState> signInFormKey = GlobalKey();
-  TextEditingController signInEmail = TextEditingController();
+  TextEditingController signInPhone = TextEditingController();
   TextEditingController signInPassword = TextEditingController();
 
   UserSignin? user;
@@ -24,10 +24,12 @@ class SignInCubit extends Cubit<UserState> {
     emit(SignInLoading());
     try {
       final response = await api.post(EndPoint.signIn, data: {
-        ApiKey.email: signInEmail.text,
+        // ApiKey.email: signInEmail.text,
+        ApiKey.phone: signInPhone.text,
         ApiKey.password: signInPassword.text,
       });
       user = UserSignin.fromJson(response);
+
 
       try {
         final decodedToken = JwtDecoder.decode(user!.token);
@@ -54,6 +56,9 @@ class SignInCubit extends Cubit<UserState> {
         EndPoint.getUser(CacheHelper().getData(key: ApiKey.id)),
       );
       final user = GetUserModel.fromJson(response);
+      print(  "===============================");
+      print(user  );  
+      print(  "===============================");
       emit(GetProfilesuccess(user: user));
     } on ServerException catch (e) {
       emit(GetprofileFailed(errMessage: e.errModel.errorMessage));
