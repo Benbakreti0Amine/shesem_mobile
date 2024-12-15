@@ -6,7 +6,6 @@ import 'package:happy_tech_mastering_api_with_flutter/representation/screens/hom
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/Report_page.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/alerts_page.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/guide_page.dart';
-import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/profile_screen.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/widgets/drawer.dart';
 
 class RootPage extends StatefulWidget {
@@ -23,7 +22,7 @@ class _RootPageState extends State<RootPage> {
     const BusPage(),
     AlertsPage(),
     const MapPage(),
-    const Report(),
+    const ReportScreen(),
     GuideScreen(),
   ];
 

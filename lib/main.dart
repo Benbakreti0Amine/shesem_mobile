@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:happy_tech_mastering_api_with_flutter/representation/cubit/user_report_cubit.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/Report_page.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/sign_in_screen.dart';
 import 'cache/cachehelper.dart';
@@ -21,6 +22,9 @@ void main() {
         ),
         BlocProvider(
           create: (context) => SignUpCubit(DioConsumer(dio: Dio())),
+        ),
+        BlocProvider(
+          create: (context) => ReportCubit(DioConsumer(dio: Dio())),
         ),
       ],
       child: const MyApp(),
@@ -43,7 +47,7 @@ class MyApp extends StatelessWidget {
           labelLarge: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
         ),
       ),
-      home: SignInScreen(),
+      home: ReportScreen(),
     );
   }
 }
