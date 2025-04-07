@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:happy_tech_mastering_api_with_flutter/core/static/colors.dart';
 
 import '../cubit/user_signupcubit.dart';
 import '../cubit/user_state.dart';
@@ -34,7 +35,7 @@ class SignUpScreen extends StatelessWidget {
                   width: double.infinity,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("assets/images/image.png"),
+                      image: AssetImage("assets/images/signup.webp"),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -54,44 +55,39 @@ class SignUpScreen extends StatelessWidget {
                       child: SingleChildScrollView(
                         controller: scrollController,
                         child: Padding(
-                          padding: const EdgeInsets.all(24.0),
+                          padding: const EdgeInsets.all(20.0),
                           child: Form(
                             key: context.read<SignUpCubit>().signUpFormKey,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Center(
-                                  child: Text(
-                                    "سمارت رود",
-                                    style: TextStyle(
-                                      fontSize: 26,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
+                                Center(
+                                  child: Image.asset(
+                                    "assets/images/wafra.png",
+                                    width: 100,
                                   ),
                                 ),
-                                const SizedBox(height: 8),
-                                Container(
-                                  child: Text(
-                                    "مرحباً بالعضو الجديد،",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                                Container(
-                                  child: Text(
-                                    "أهلاً بك في سمارت رود!",
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.grey,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                                const SizedBox(height: 32),
+                                // Container(
+                                //   child: Text(
+                                //     "مرحباً  بك",
+                                //     style: TextStyle(
+                                //       fontSize: 16,
+                                //       color: Colors.grey,
+                                //     ),
+                                //     textAlign: TextAlign.center,
+                                //   ),
+                                // ),
+                                // Container(
+                                //   child: Text(
+                                //     "أهلاً بك في وفرة!",
+                                //     style: TextStyle(
+                                //       fontSize: 16,
+                                //       color: Colors.grey,
+                                //     ),
+                                //     textAlign: TextAlign.center,
+                                //   ),
+                                // ),
+                                const SizedBox(height: 10),
                                 _buildTextField(
                                   context,
                                   "الاسم العائلي",
@@ -136,8 +132,7 @@ class SignUpScreen extends StatelessWidget {
                                       context.read<SignUpCubit>().signUp();
                                     },
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          const Color.fromRGBO(26, 64, 113, 1),
+                                      backgroundColor: AppColors.primary,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(20),
                                       ),
@@ -196,7 +191,7 @@ class SignUpScreen extends StatelessWidget {
                       isFieldEnabled = value ?? false;
                     });
                   },
-                  activeColor: Color.fromRGBO(26, 64, 113, 1),
+                  activeColor: AppColors.primary,
                 ),
                 Text(
                   "هل ترغب في إضافة وصف عن نفسك؟",
@@ -297,7 +292,7 @@ class ArabicAlreadyHaveAnAccountWidget extends StatelessWidget {
           child: const Text(
             'تسجيل الدخول',
             style: TextStyle(
-              color: Color.fromRGBO(26, 64, 113, 1),
+              color: AppColors.primary,
               fontSize: 12,
             ),
           ),
