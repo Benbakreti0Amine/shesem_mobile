@@ -45,7 +45,7 @@ class _RootPageState extends State<RootPage>
     const HomePage(),
     AlertsPage(),
     const ProfilePage(),
-    const ChatScreen(),
+     ChatScreen(),
   ];
 
   final List<BottomNavigationBarItem> _navigationItems = [
