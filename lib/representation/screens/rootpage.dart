@@ -18,6 +18,7 @@ class RootPage extends StatefulWidget {
 
 class _RootPageState extends State<RootPage> {
   int _bottomIndex = 2;
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final List<Widget> _pages = [
     const BusPage(),
@@ -29,81 +30,120 @@ class _RootPageState extends State<RootPage> {
 
   final List<BottomNavigationBarItem> _navigationItems = [
     const BottomNavigationBarItem(
-      icon: Icon(Icons.directions_bus_outlined),
-      label: 'Buses',
+      icon: Icon(Icons.person),
+      label: 'حسابي',
     ),
     const BottomNavigationBarItem(
-      icon: Icon(Icons.warning_outlined),
-      label: 'Alertes',
+      icon: Icon(Icons.notification_important_outlined),
+      label: 'الرسائل',
     ),
     const BottomNavigationBarItem(
-      icon: Icon(Icons.map_outlined),
-      label: 'Map',
+      icon: Icon(Icons.money_outlined),
+      label: 'إستثمارات',
     ),
     const BottomNavigationBarItem(
-      icon: Icon(Icons.description_outlined),
-      label: 'Rapports',
-    ),
-    const BottomNavigationBarItem(
-      icon: Icon(Icons.person_outline),
-      label: 'Guide',
+      icon: Icon(Icons.home_outlined),
+      label: 'الرئيسية',
     ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 1,
-        shadowColor: Colors.grey.withOpacity(0.2),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: Image.asset(
-                'assets/images/saferoad.png',
-                height: 150,
-                width: 150,
+        backgroundColor: Color(0xFF4CAF50), // Green color as shown in the image
+        elevation: 0,
+        automaticallyImplyLeading: false, // Remove default back button
+        titleSpacing: 0,
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Logo "وفرة"
+
+              Image.asset(
+                'assets/images/logo.png',
+                width: 90,
+                height: 90,
               ),
-            ),
-          ],
-        ),
-        centerTitle: true,
-        actions: [
-          GestureDetector(
-            onTap: () { Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>  SosScreen(),
-              ),
-            ); },
-            child: Padding(
-              padding: const EdgeInsets.only(right: 16.0),
-              child: Container(
-                width: 35,
+              // Bell icon in white circle
+              Container(
+                width: 40,
                 height: 40,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
+                  color: Colors.white,
                   shape: BoxShape.circle,
-                  color: Color(0xFFFF4444),
                 ),
-                child: const Center(
-                  child: Text(
-                    'SOS',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
+                child: IconButton(
+                  icon: Icon(Icons.notifications_outlined,
+                      color: Color(0xFF4CAF50), size: 20),
+                  onPressed: () {
+                    // Handle notification button press
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        bottom: PreferredSize(
+          preferredSize: Size.fromHeight(60),
+          child: Padding(
+            padding: const EdgeInsets.only(
+              left: 10.0,
+              bottom: 12.0,
+              right: 10.0,
+            ),
+            child: Row(
+              children: [
+                // Search bar
+                Expanded(
+                  child: Container(
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Color(0xFF69BB6D), 
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: TextField(
+                      textAlign: TextAlign.right,
+                      textDirection: TextDirection.rtl,
+                      decoration: InputDecoration(
+                        hintText: '...البحث عن خطة عمل',
+                        hintStyle: TextStyle(
+                          color: Colors.white.withOpacity(0.8),
+                          fontSize: 14,
+                        ),
+                        prefixIcon: Icon(Icons.search, color: Colors.white),
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(vertical: 10),
+                      ),
                     ),
                   ),
                 ),
-              ),
+                SizedBox(width: 10),
+                // Menu button
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF69BB6D), // Lighter green for menu button
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: IconButton(
+                    icon: Icon(Icons.menu, color: Colors.white, size: 20),
+                    onPressed: () {
+                      _scaffoldKey.currentState?.openDrawer();
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
-      drawer: AppDrawer(),
+      // drawer: CustomDrawer(),
       backgroundColor: Colors.white,
       body: IndexedStack(
         index: _bottomIndex,
@@ -122,7 +162,8 @@ class _RootPageState extends State<RootPage> {
         child: BottomNavigationBar(
           items: _navigationItems,
           currentIndex: _bottomIndex,
-          selectedItemColor: Colors.blue,
+          selectedItemColor:
+              Color(0xFF4CAF50), // Green color to match the app bar
           unselectedItemColor: Color(0xFF9DB2CE),
           backgroundColor: Colors.white,
           type: BottomNavigationBarType.fixed,
@@ -140,146 +181,3 @@ class _RootPageState extends State<RootPage> {
     );
   }
 }
-
-
-// import 'package:flutter/material.dart';
-// import 'package:happy_tech_mastering_api_with_flutter/core/static/colors.dart';
-// import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/Buses_page.dart';
-// import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/Map_page.dart';
-// import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/Report_page.dart';
-// import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/alerts_page.dart';
-// import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/profile_screen.dart';
-
-// class RootPage extends StatefulWidget {
-//   const RootPage({super.key});
-
-//   @override
-//   State<RootPage> createState() => _RootPageState();
-// }
-
-// class _RootPageState extends State<RootPage> {
-//   int _bottomIndex = 2; 
-
-//   final List<Widget> _pages = [
-//     const BusPage(),
-//     AlertsPage(),
-//     const MapPage(),
-//     const Report(),
-//     const ProfileScreen(),
-//   ];
-
-//   final List<BottomNavigationBarItem> _navigationItems = [
-//     const BottomNavigationBarItem(
-//       icon: Icon(Icons.directions_bus_outlined),
-//       label: 'Buses',
-//     ),
-//     const BottomNavigationBarItem(
-//       icon: Icon(Icons.warning_outlined),
-//       label: 'Alertes',
-//     ),
-//     const BottomNavigationBarItem(
-//       icon: Icon(Icons.map_outlined),
-//       label: 'Map',
-//     ),
-//     const BottomNavigationBarItem(
-//       icon: Icon(Icons.description_outlined),
-//       label: 'Rapports',
-//     ),
-//     const BottomNavigationBarItem(
-//       icon: Icon(Icons.person_outline),
-//       label: 'Profile',
-//     ),
-//   ];
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         backgroundColor: Colors.white,
-//         elevation: 1,
-//         shadowColor: Colors.grey.withOpacity(0.2),
-//         leading: IconButton(
-//           icon:  Icon(
-//             Icons.menu,
-//             color: AppColors.primary,
-//             size: 24,
-//           ),
-//           onPressed: () {
-//             // Add menu functionality here
-//           },
-//         ),
-//         title: Row(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             Padding(
-//               padding: const EdgeInsets.only(top: 10),
-//               child: Image.asset(
-//                 'assets/images/saferoad.png', 
-//                 height: 150,
-//                 width: 150,
-//               ),
-//             ),
-            
-//           ],
-//         ),
-//         centerTitle: true,
-//         actions: [
-//           Padding(
-//             padding: const EdgeInsets.only(right: 16.0),
-//             child: Container(
-//               width: 35,
-//               height: 40,
-//               decoration: const BoxDecoration(
-//                 shape: BoxShape.circle,
-//                 color: Color(0xFFFF4444),
-//               ),
-//               child: const Center(
-//                 child: Text(
-//                   'SOS',
-//                   style: TextStyle(
-//                     color: Colors.white,
-//                     fontSize: 12,
-//                     fontWeight: FontWeight.bold,
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//       backgroundColor: Colors.white,
-//       body: IndexedStack(
-//         index: _bottomIndex,
-//         children: _pages,
-//       ),
-//       bottomNavigationBar: Container(
-//         decoration: BoxDecoration(
-//           color: Colors.white,
-//           border: Border(
-//             top: BorderSide(
-//               color: Colors.grey.withOpacity(0.2),
-//               width: 1,
-//             ),
-//           ),
-//         ),
-//         child: BottomNavigationBar(
-//           items: _navigationItems,
-//           currentIndex: _bottomIndex,
-//           selectedItemColor: Colors.blue,
-//           unselectedItemColor: Color(0xFF9DB2CE),
-//           backgroundColor: Colors.white,
-//           type: BottomNavigationBarType.fixed,
-//           selectedFontSize: 12,
-//           unselectedFontSize: 12,
-//           showUnselectedLabels: true,
-//           elevation: 0,
-//           onTap: (index) {
-//             setState(() {
-//               _bottomIndex = index;
-//             });
-//           },
-//         ),
-//       ),
-//     );
-//   }
-// }

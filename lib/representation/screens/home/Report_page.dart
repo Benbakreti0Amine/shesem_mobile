@@ -10,273 +10,276 @@ class ReportScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: BlocConsumer<ReportCubit, ReportState>(
-        listener: (context, state) {
-          if (state is ReportSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(state.message),
-              backgroundColor: Colors.green,
-            ));
-          } else if (state is ReportFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(state.errMessage),
-              backgroundColor: Colors.red,
-            ));
-          }
-        },
-        builder: (context, state) {
-          return Scaffold(
-            body: SingleChildScrollView(
-              padding: const EdgeInsets.all(20.0),
-              child: Form(
-                key: context.read<ReportCubit>().reportFormKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            // Green background rectangle
+            Stack(
+              children: [
+                // Green rectangle with rounded bottom corners
+                Container(
+                  height: 180,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFF4CAF50),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                    ),
+                  ),
+                ),
+                
+                // Weather widget
+                Positioned(
+                  top: 30,
+                  left: 16,
+                  right: 16,
+                  child: Container(
+                    height: 130,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Stack(
                       children: [
-                        _buildHeader(),
-                        Container(
-                          padding: const EdgeInsets.only(left: 10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25),
-                            color: AppColors.primary,
+                        // Right aligned header text
+                        Positioned(
+                          top: 10,
+                          right: 15,
+                          child: Text(
+                            'وهران، الجزائر',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                            textDirection: TextDirection.rtl,
                           ),
-                          child: Row(
+                        ),
+                        
+                        // Left aligned date text
+                        Positioned(
+                          top: 10,
+                          left: 15,
+                          child: Text(
+                            'الأحد، 12 ديسمبر 2024',
+                            style: TextStyle(
+                              fontSize: 14,
+                            ),
+                            textDirection: TextDirection.rtl,
+                          ),
+                        ),
+                        
+                        // Temperature display
+                        Positioned(
+                          top: 40,
+                          right: 15,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Text("Historique", style: TextStyle(color: Colors.white,fontSize: 12),),
-                              IconButton(
-                                icon: const Icon(Icons.history, color: Colors.white,),
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                                      ),
+                              Text(
+                                '°24',
+                                style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textDirection: TextDirection.rtl,
+                              ),
+                              Text(
+                                '71.6F°',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
                             ],
-                          ))
+                          ),
+                        ),
+                        
+                        // Weather icon
+                        // Positioned(
+                        //   top: 35,
+                        //   left: 15,
+                        //   child: Image.asset(
+                        //     'assets/images/Image.png', // Replace with actual path to weather icon
+                        //     width: 70,
+                        //     height: 70,
+                        //   ),
+                        // ),
+                        
+                        // Weather condition text
+                        Positioned(
+                          bottom: 10,
+                          left: 30,
+                          child: Text(
+                            'مشمس',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textDirection: TextDirection.rtl,
+                          ),
+                        ),
+                        
+                        // Weather details row
+                        Positioned(
+                          bottom: 10,
+                          right: 15,
+                          child: Row(
+                            textDirection: TextDirection.rtl,
+                            children: [
+                              Text(
+                                '10 km/h',
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              SizedBox(width: 5),
+                              Icon(Icons.air, size: 14),
+                              SizedBox(width: 15),
+                              Text(
+                                '83 %',
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              SizedBox(width: 5),
+                              Icon(Icons.water_drop, size: 14),
+                              SizedBox(width: 15),
+                              Text(
+                                '2 of 10',
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              SizedBox(width: 5),
+                              Icon(Icons.wb_sunny_outlined, size: 14),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
-                    const SizedBox(height: 20),
-                    _buildDropdown(
-                      context,
-                      label: 'Choisissez la catégorie...',
-                      controller: context.read<ReportCubit>().reportCategory,
-                      items: ['Accident de la route', 'Travaux en cours', 'Violation de feu rouge'],
-                    ),
-                    const SizedBox(height: 12),
-                    _buildDropdown(
-                      context,
-                      label: 'Choisissez la gravité...',
-                      controller: context.read<ReportCubit>().reportSeverity,
-                      items: ['Faible', 'Moyenne', 'Élevée'],
-                    ),
-                    const SizedBox(height: 12),
-                    _buildTextField(
-                      context,
-                      hintText: 'Saisissez le titre...',
-                      maxLines: 1,
-                      controller: context.read<ReportCubit>().reportTitle,
-                    ),
-                    const SizedBox(height: 12),
-                    _buildTextField(
-                      context,
-                      hintText: 'Saisissez la description...',
-                      maxLines: 5,
-                      controller: context.read<ReportCubit>().reportDescription,
-                    ),
-                    const SizedBox(height: 12),
-                    _buildTextField(
-                      context,
-                      hintText: 'Latitude',
-                      maxLines: 1,
-                      controller: context.read<ReportCubit>().latitude,
-                    ),
-                    const SizedBox(height: 12),
-                    _buildTextField(
-                      context,
-                      hintText: 'Longitude',
-                      maxLines: 1,
-                      controller: context.read<ReportCubit>().longitude,
-                    ),
-                    const SizedBox(height: 12),
-                    _buildTextField(
-                      context,
-                      hintText: 'Numéro de téléphone',
-                      maxLines: 1,
-                      controller: context.read<ReportCubit>().reportPhone,
-                    ),
-                    const SizedBox(height: 12),
-                    _buildUploadSection(
-                      context,
-                      title: 'Déposez une image',
-                      onTap: () => context.read<ReportCubit>().pickImage(),
-                      icon: Icons.photo_camera,
-                      fileName: context.read<ReportCubit>().reportImage?.path,
-                    ),
-                    const SizedBox(height: 12),
-                    _buildUploadSection(
-                      context,
-                      title: 'Déposez une vidéo',
-                      onTap: () => context.read<ReportCubit>().pickVideo(),
-                      icon: Icons.video_camera_back,
-                      fileName: context.read<ReportCubit>().reportVideo?.path,
-                    ),
-                    const SizedBox(height: 20),
-                    _buildSubmitButton(context, state),
-                  ],
+                  ),
                 ),
+              ],
+            ),
+            
+            // Post item
+            Container(
+              margin: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 4,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  // Post header with profile pic and name
+                  Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Row(
+                      textDirection: TextDirection.rtl,
+                      children: [
+                        CircleAvatar(
+                          radius: 20,
+                          backgroundImage: AssetImage('assets/images/profile.jpg'), // Replace with actual path
+                        ),
+                        SizedBox(width: 10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              'وراد أشرف شرف الدين',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                              textDirection: TextDirection.rtl,
+                            ),
+                            Text(
+                              'نيو بوست، الجزائر',
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey,
+                              ),
+                              textDirection: TextDirection.rtl,
+                            ),
+                          ],
+                        ),
+                        Spacer(),
+                        Icon(Icons.more_horiz),
+                      ],
+                    ),
+                  ),
+                  
+                  // Post image
+                  Container(
+                    height: 200,
+                    width: double.infinity,
+                    child: Image.asset(
+                      'assets/images/grazing_cattle.jpg', // Replace with actual path
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  
+                  // Dots indicator
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        5,
+                        (index) => Container(
+                          margin: EdgeInsets.symmetric(horizontal: 2),
+                          width: index == 0 ? 8 : 6,
+                          height: index == 0 ? 8 : 6,
+                          decoration: BoxDecoration(
+                            color: index == 0 ? Colors.blue : Colors.grey[300],
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _buildHeader() {
-    return const Text(
-      'Remplissez les informations\n ci-dessous !',
-      style: TextStyle(
-        fontSize: 12,
-        fontWeight: FontWeight.w500,
-      ),
-    );
-  }
-
-  Widget _buildDropdown(
-    BuildContext context, {
-    required String label,
-    required TextEditingController controller,
-    required List<String> items,
-  }) {
-    return DropdownButtonFormField<String>(
-      value: controller.text.isNotEmpty ? controller.text : null,
-      hint: Text(label, style: const TextStyle(color: Colors.grey)),
-      icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
-      isExpanded: true,
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: AppColors.primary,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
-          borderSide: BorderSide.none,
-        ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      ),
-      dropdownColor: AppColors.primary,
-      style: const TextStyle(color: Colors.white),
-      items: items.map((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-      onChanged: (value) {
-        if (value != null) {
-          controller.text = value;
-        }
-      },
-      validator: (value) => controller.text.isEmpty ? 'Veuillez choisir une option' : null,
-    );
-  }
-
-  Widget _buildTextField(
-    BuildContext context, {
-    required String hintText,
-    required int maxLines,
-    required TextEditingController controller,
-  }) {
-    return TextFormField(
-      controller: controller,
-      maxLines: maxLines,
-      decoration: InputDecoration(
-        hintText: hintText,
-        hintStyle: TextStyle(color: Colors.grey[400]),
-        filled: true,
-        fillColor: AppColors.primary.withOpacity(0.1),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25),
-          borderSide: BorderSide.none,
-        ),
-        contentPadding: const EdgeInsets.all(16),
-      ),
-      validator: (value) => value!.isEmpty ? 'Ce champ est obligatoire' : null,
-    );
-  }
-
-  Widget _buildUploadSection(
-    BuildContext context, {
-    required String title,
-    required VoidCallback onTap,
-    required IconData icon,
-    String? fileName,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 16),
-        decoration: BoxDecoration(
-          color: AppColors.primary.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(25),
-        ),
-        child: Row(
-          children: [
-            Icon(
-              fileName != null ? Icons.check_circle : icon,
-              color: AppColors.primary.withOpacity(0.5),
-              size: 24,
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Text(
-                fileName != null
-                    ? 'Fichier sélectionné: ${fileName.split('/').last}'
-                    : title,
-                style: TextStyle(color: AppColors.primary, fontSize: 14),
-                overflow: TextOverflow.ellipsis,
+            
+            // You can add more post items here to make the list scrollable
+            // Duplicate post items
+            Container(
+              margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 4,
+                    offset: Offset(0, 2),
+                  ),
+                ],
               ),
+              height: 300, // Placeholder for another post
+            ),
+            
+            Container(
+              margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 4,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
+              height: 300, // Placeholder for another post
             ),
           ],
         ),
       ),
     );
   }
-
-
-  Widget _buildSubmitButton(BuildContext context, ReportState state) {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: state is! ReportLoading 
-          ? () => context.read<ReportCubit>().createReport() 
-          : null,
-        style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primary,
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
-          ),
-        ),
-        child: state is ReportLoading
-          ? const SizedBox(
-              width: 24,
-              height: 24,
-              child: CircularProgressIndicator(
-                color: Colors.white,
-                strokeWidth: 2,
-              ),
-            )
-          : const Text(
-              'Envoyer',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-      ),
-    );
-  }
 }
-
