@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:happy_tech_mastering_api_with_flutter/core/static/colors.dart';
+import 'package:happy_tech_mastering_api_with_flutter/representation/screens/sign_in_screen.dart';
 
 import '../cubit/user_signupcubit.dart';
 import '../cubit/user_state.dart';
@@ -287,7 +288,9 @@ class ArabicAlreadyHaveAnAccountWidget extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            // Navigate to Sign In page
+            Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => SignInScreen()), // Adjust the route name as per your app's routing
+            );
           },
           child: const Text(
             'تسجيل الدخول',

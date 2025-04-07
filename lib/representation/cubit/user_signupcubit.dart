@@ -22,7 +22,6 @@ class SignUpCubit extends Cubit<UserState> {
   TextEditingController description = TextEditingController();
 
   TextEditingController SignupPhone = TextEditingController();
-  
 
   signUp() async {
     try {
@@ -38,6 +37,14 @@ class SignUpCubit extends Cubit<UserState> {
           ApiKey.phone: SignupPhone.text,
           ApiKey.is_active: true,
         },
+        // data: {
+        //   ApiKey.nom: "signUpName.text",
+        //   ApiKey.prenom: "signUpFirstname.text",
+        //   "description": "description.text",
+        //   ApiKey.password: "signUpPassword.text",
+        //   ApiKey.phone: "55555555555",
+        //   ApiKey.is_active: true,
+        // },
       );
       final signUPModel = UserSignup.fromJson(response);
       emit(SignUpSuccess(message: signUPModel.message));

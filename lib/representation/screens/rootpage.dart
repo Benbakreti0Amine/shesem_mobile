@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:happy_tech_mastering_api_with_flutter/core/static/colors.dart';
-import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/Aboutus.dart';
-import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/Buses_page.dart';
+import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/Home_page.dart';
+
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/Map_page.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/Report_page.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/SosPage.dart';
@@ -20,7 +19,7 @@ class _RootPageState extends State<RootPage> {
   int _bottomIndex = 2;
 
   final List<Widget> _pages = [
-    const BusPage(),
+    HomePage(),
     AlertsPage(),
     const MapPage(),
     const ReportScreen(),
@@ -29,8 +28,8 @@ class _RootPageState extends State<RootPage> {
 
   final List<BottomNavigationBarItem> _navigationItems = [
     const BottomNavigationBarItem(
-      icon: Icon(Icons.directions_bus_outlined),
-      label: 'Buses',
+      icon: Icon(Icons.home_outlined),
+      label: 'Home',
     ),
     const BottomNavigationBarItem(
       icon: Icon(Icons.warning_outlined),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:happy_tech_mastering_api_with_flutter/core/static/colors.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/rootpage.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/sign_up_screen.dart';
 
@@ -17,10 +18,9 @@ class SignInScreen extends StatelessWidget {
         listener: (context, state) {
           if (state is SignInSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Success")),
+              const SnackBar(content: Text("تم بنجاح")),
             );
             context.read<SignInCubit>().getUserData();
-            print("minooos");
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -38,22 +38,22 @@ class SignInScreen extends StatelessWidget {
             backgroundColor: const Color(0xFFEFF2F5),
             body: Stack(
               children: [
-                // Top image covering the entire screen
+                // Top image covering the top part of screen
                 Container(
                   height: size.height * 0.35,
                   width: double.infinity,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("assets/images/image.png"),
+                      image: AssetImage("assets/images/signup.webp"),
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
                 // Login Card
                 DraggableScrollableSheet(
-                  initialChildSize: 0.7, // Start at 70% of the screen
-                  minChildSize: 0.7, // Minimum size is 70%
-                  maxChildSize: 1, // Can expand to full screen
+                  initialChildSize: 0.7,
+                  minChildSize: 0.7,
+                  maxChildSize: 1,
                   builder: (context, scrollController) {
                     return Container(
                       decoration: const BoxDecoration(
@@ -65,28 +65,24 @@ class SignInScreen extends StatelessWidget {
                       child: SingleChildScrollView(
                         controller: scrollController,
                         child: Padding(
-                          padding: const EdgeInsets.all(24.0),
+                          padding: const EdgeInsets.all(20.0),
                           child: Form(
                             key: context.read<SignInCubit>().signInFormKey,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Center(
-                                  child: Text(
-                                    "SmartRoad",
-                                    style: TextStyle(
-                                      fontSize: 26,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
+                                Center(
+                                  child: Image.asset(
+                                    "assets/images/wafra.png",
+                                    width: 100,
                                   ),
                                 ),
                                 const SizedBox(height: 8),
                                 Container(
                                   child: Text(
-                                    "Hello member, ",
+                                    "مرحباً بك",
                                     style: TextStyle(
-                                      fontSize: 14,
+                                      fontSize: 16,
                                       color: Colors.grey,
                                     ),
                                     textAlign: TextAlign.center,
@@ -94,92 +90,56 @@ class SignInScreen extends StatelessWidget {
                                 ),
                                 Container(
                                   child: Text(
-                                    "Ravi de vous revoir sur SmartRoad!",
+                                    "أهلاً بك في وفرة!",
                                     style: TextStyle(
-                                      fontSize: 14,
+                                      fontSize: 16,
                                       color: Colors.grey,
                                     ),
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
                                 const SizedBox(height: 32),
-                                // Username Field
-                                TextField(
-                                  controller:
-                                      context.read<SignInCubit>().signInPhone,
-                                  decoration: InputDecoration(
-                                    hintText:
-                                        "Saisissez votre numéro de telephone ...",
-                                    hintStyle: TextStyle(
-                                      color: Colors.grey[400],
-                                      fontSize: 10,
-                                    ),
-                                    filled: true,
-                                    fillColor: Color(0xFFF5F8FA),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 16, vertical: 12),
-                                  ),
+                                // Phone Number Field
+                                _buildTextField(
+                                  context,
+                                  "رقم الهاتف",
+                                  "أدخل رقم هاتفك",
+                                  context.read<SignInCubit>().signInPhone,
                                 ),
                                 const SizedBox(height: 16),
                                 // Password Field
-                                TextField(
-                                  controller: context
-                                      .read<SignInCubit>()
-                                      .signInPassword,
-                                  obscureText: true,
-                                  decoration: InputDecoration(
-                                    hintText: "Saisissez votre mot de passe...",
-                                    hintStyle: TextStyle(
-                                      color: Colors.grey[400],
-                                      fontSize: 10,
-                                    ),
-                                    filled: true,
-                                    fillColor: Color(0xFFF5F8FA),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 16, vertical: 12),
-                                    suffixIcon: const Icon(
-                                      Icons.visibility_off,
-                                      color: Colors.grey,
-                                      size: 13,
-                                    ),
-                                  ),
+                                _buildTextField(
+                                  context,
+                                  "كلمة المرور",
+                                  "أدخل كلمة المرور",
+                                  context.read<SignInCubit>().signInPassword,
+                                  isPassword: true,
                                 ),
                                 const SizedBox(height: 16),
                                 // Remember Me & Forgot Password Row
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       children: [
                                         Checkbox(
                                           value: true,
                                           onChanged: (value) {},
-                                          activeColor: const Color.fromRGBO(
-                                              26, 64, 113, 1),
+                                          activeColor: AppColors.primary,
                                         ),
                                         const Text(
-                                          "Se souvenir de moi",
-                                          style: TextStyle(fontSize: 11),
+                                          "تذكرني",
+                                          style: TextStyle(fontSize: 10.5),
                                         ),
                                       ],
                                     ),
                                     TextButton(
                                       onPressed: () {},
                                       child: const Text(
-                                        "Mot de passe oublié ?",
+                                        "نسيت كلمة المرور؟",
                                         style: TextStyle(
-                                          color: const Color.fromRGBO(
-                                              26, 64, 113, 1),
-                                          fontSize: 11,
+                                          color: AppColors.primary,
+                                          fontSize: 10.5,
                                         ),
                                       ),
                                     ),
@@ -195,8 +155,7 @@ class SignInScreen extends StatelessWidget {
                                       context.read<SignInCubit>().signIn();
                                     },
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor:
-                                          const Color.fromRGBO(26, 64, 113, 1),
+                                      backgroundColor: AppColors.primary,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(20),
                                       ),
@@ -206,7 +165,7 @@ class SignInScreen extends StatelessWidget {
                                             color: Colors.white,
                                           )
                                         : const Text(
-                                            "Se connecter",
+                                            "تسجيل الدخول",
                                             style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 12,
@@ -215,38 +174,10 @@ class SignInScreen extends StatelessWidget {
                                           ),
                                   ),
                                 ),
-                                const SizedBox(height: 16),
-                                // Don't Have Account?
-                                Center(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Text(
-                                        "Vous n'avez pas de compte ?",
-                                        style: TextStyle(fontSize: 14),
-                                      ),
-                                      TextButton(
-                                        onPressed: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const SignUpScreen(),
-                                            ),
-                                          );
-                                        },
-                                        child: const Text(
-                                          "S'inscrire",
-                                          style: TextStyle(
-                                            color: const Color.fromRGBO(
-                                                26, 64, 113, 1),
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                const SizedBox(height: 18),
+                                // Don't Have Account? - Arabic version
+                                const ArabicDontHaveAccountWidget(),
+                                const SizedBox(height: 30),
                               ],
                             ),
                           ),
@@ -262,102 +193,78 @@ class SignInScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildTextField(
+    BuildContext context,
+    String label,
+    String hint,
+    TextEditingController controller, {
+    bool isPassword = false,
+  }) {
+    return TextField(
+      controller: controller,
+      obscureText: isPassword,
+      textAlign: TextAlign.right, // Right alignment for Arabic
+      textDirection: TextDirection.rtl, // Right to left for Arabic
+      decoration: InputDecoration(
+        labelText: label,
+        alignLabelWithHint: true,
+        labelStyle: TextStyle(
+          color: Colors.grey[400],
+          fontSize: 13,
+        ),
+        hintText: hint,
+        hintStyle: TextStyle(
+          color: Colors.grey[200],
+          fontSize: 7,
+        ),
+        filled: true,
+        fillColor: Color(0xFFF5F8FA),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide.none,
+        ),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        suffixIcon: isPassword
+            ? const Icon(Icons.visibility_off, color: Colors.grey, size: 13)
+            : null,
+      ),
+    );
+  }
 }
 
+// Arabic version of the "Don't have an account?" widget
+class ArabicDontHaveAccountWidget extends StatelessWidget {
+  const ArabicDontHaveAccountWidget({Key? key}) : super(key: key);
 
-
-// class SignInScreen extends StatelessWidget {
-//   const SignInScreen({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     Size size = MediaQuery.of(context).size;
-//     return SafeArea(
-//       child: BlocConsumer<SignInCubit, UserState>(
-//         listener: (context, state) {
-//           if (state is SignInSuccess) {
-//             ScaffoldMessenger.of(context).showSnackBar(
-//               const SnackBar(
-//                 content: Text("success"),
-//               ),
-//             );//
-//             // context.read<SignInCubit>().getUserData();
-//             // Navigator.push(
-//             //   context,
-//             //   MaterialPageRoute(
-//             //     builder: (context) => const ProfileScreen(),
-//             //   ),
-//             // );
-//           } else if (state is SignInFailure) {
-//             ScaffoldMessenger.of(context).showSnackBar(
-//               SnackBar(
-//                 content: Text(state.errMessage),
-//               ),
-//             );
-//           }
-//         },
-//         builder: (context, state) {
-//           return Scaffold(
-//             backgroundColor: const Color(0xffEEF1F3),
-//             body: Column(
-//               children: [
-//                 const PageHeader(),
-//                 Expanded(
-//                   child: Container(
-//                     decoration: const BoxDecoration(
-//                       color: Colors.white,
-//                       borderRadius: BorderRadius.vertical(
-//                         top: Radius.circular(20),
-//                       ),
-//                     ),
-//                     child: SingleChildScrollView(
-//                       child: Form(
-//                         key: context.read<SignInCubit>().signInFormKey,
-//                         child: Column(
-//                           children: [
-//                             const PageHeading(title: 'Sign-in'),
-//                             //!Email
-//                             CustomInputField(
-//                               labelText: 'Pohne Number',
-//                               hintText: 'Your Phone Number',
-//                               controller: context.read<SignInCubit>().signInPhone,
-//                             ),
-//                             const SizedBox(height: 16),
-//                             //!Password
-//                             CustomInputField(
-//                               labelText: 'Password',
-//                               hintText: 'Your password',
-//                               obscureText: true,
-//                               suffixIcon: true,
-//                               controller:
-//                                   context.read<SignInCubit>().signInPassword,
-//                             ),
-//                             const SizedBox(height: 16),
-//                             ForgetPasswordWidget(size: size),
-//                             const SizedBox(height: 20),
-//                             state is SignInLoading
-//                                 ? const CircularProgressIndicator()
-//                                 : CustomFormButton(
-//                                     innerText: 'Sign In',
-//                                     onPressed: () {
-//                                       context.read<SignInCubit>().signIn();
-//                                     },   
-//                                   ),
-//                             const SizedBox(height: 18),
-//                             //! Dont Have An Account ?
-//                             DontHaveAnAccountWidget(size: size),
-//                             const SizedBox(height: 20),
-//                           ],
-//                         ),
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          'ليس لديك حساب؟',
+          style: TextStyle(
+            color: Colors.grey[600],
+            fontSize: 12,
+          ),
+        ),
+        TextButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SignUpScreen()),
+            );
+          },
+          child: const Text(
+            'تسجيل',
+            style: TextStyle(
+              color: AppColors.primary,
+              fontSize: 12,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
