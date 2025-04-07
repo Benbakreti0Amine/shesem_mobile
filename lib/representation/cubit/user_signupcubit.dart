@@ -19,6 +19,7 @@ class SignUpCubit extends Cubit<UserState> {
   TextEditingController signUpEmail = TextEditingController();
   TextEditingController signUpLocation = TextEditingController();
   TextEditingController signUpPassword = TextEditingController();
+  TextEditingController description = TextEditingController();
 
   TextEditingController SignupPhone = TextEditingController();
   

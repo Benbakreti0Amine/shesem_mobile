@@ -5,7 +5,6 @@ import '../cubit/user_signupcubit.dart';
 import '../cubit/user_state.dart';
 import 'widgets/already_have_an_account_widget.dart';
 
-
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
@@ -63,7 +62,7 @@ class SignUpScreen extends StatelessWidget {
                               children: [
                                 const Center(
                                   child: Text(
-                                    "SmartRoad",
+                                    "سمارت رود",
                                     style: TextStyle(
                                       fontSize: 26,
                                       fontWeight: FontWeight.bold,
@@ -74,7 +73,7 @@ class SignUpScreen extends StatelessWidget {
                                 const SizedBox(height: 8),
                                 Container(
                                   child: Text(
-                                    "Hello new member,",
+                                    "مرحباً بالعضو الجديد،",
                                     style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.grey,
@@ -84,7 +83,7 @@ class SignUpScreen extends StatelessWidget {
                                 ),
                                 Container(
                                   child: Text(
-                                    "Bienvenue sur SmartRoad!",
+                                    "أهلاً بك في سمارت رود!",
                                     style: TextStyle(
                                       fontSize: 14,
                                       color: Colors.grey,
@@ -95,47 +94,38 @@ class SignUpScreen extends StatelessWidget {
                                 const SizedBox(height: 32),
                                 _buildTextField(
                                   context,
-                                  "Nom",
-                                  "Votre nom",
+                                  "الاسم العائلي",
+                                  "أدخل اسمك العائلي",
                                   context.read<SignUpCubit>().signUpName,
                                 ),
                                 const SizedBox(height: 16),
                                 _buildTextField(
                                   context,
-                                  "Prénom",
-                                  "Votre prénom",
+                                  "الاسم الأول",
+                                  "أدخل اسمك الأول",
                                   context.read<SignUpCubit>().signUpFirstname,
                                 ),
                                 const SizedBox(height: 16),
-                                // _buildTextField(
-                                //   context,
-                                //   "Matricule",
-                                //   "Votre matricule",
-                                //   context.read<SignUpCubit>().Matricule,
-                                // ),
-
-                                const SizedBox(height: 16),
                                 _buildTextField(
                                   context,
-                                  "Téléphone",
-                                  "Votre numéro de téléphone",
+                                  "رقم الهاتف",
+                                  "أدخل رقم هاتفك",
                                   context.read<SignUpCubit>().SignupPhone,
                                 ),
                                 const SizedBox(height: 16),
                                 _buildTextField(
                                   context,
-                                  "Mot de passe",
-                                  "Votre mot de passe",
+                                  "كلمة المرور",
+                                  "أدخل كلمة المرور",
                                   context.read<SignUpCubit>().signUpPassword,
                                   isPassword: true,
                                 ),
-
                                 const SizedBox(height: 22),
                                 _buildOptionalTextField(
                                   context,
-                                  "Matricule",
-                                  "Saisissez le matricule de votre voiture...",
-                                  context.read<SignUpCubit>().Matricule,
+                                  "الوصف",
+                                  "أدخل وصفاً عن نفسك...",
+                                  context.read<SignUpCubit>().description,
                                 ),
                                 const SizedBox(height: 22),
                                 SizedBox(
@@ -156,7 +146,7 @@ class SignUpScreen extends StatelessWidget {
                                         ? const CircularProgressIndicator(
                                             color: Colors.white)
                                         : const Text(
-                                            "S'inscrire",
+                                            "تسجيل",
                                             style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 12,
@@ -166,7 +156,7 @@ class SignUpScreen extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 18),
-                                const AlreadyHaveAnAccountWidget(),
+                                const ArabicAlreadyHaveAnAccountWidget(),
                                 const SizedBox(height: 30),
                               ],
                             ),
@@ -209,14 +199,15 @@ class SignUpScreen extends StatelessWidget {
                   activeColor: Color.fromRGBO(26, 64, 113, 1),
                 ),
                 Text(
-                  "Envie d'ajouter le matricule de ta voiture ?",
-                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.w400),
+                  "هل ترغب في إضافة وصف عن نفسك؟",
+                  style: TextStyle(fontSize: 10.5, fontWeight: FontWeight.w400),
                 ),
               ],
             ),
             if (isFieldEnabled)
               TextField(
                 controller: controller,
+                textAlign: TextAlign.right, // Right alignment for Arabic
                 decoration: InputDecoration(
                   labelText: label,
                   labelStyle: TextStyle(
@@ -254,8 +245,11 @@ class SignUpScreen extends StatelessWidget {
     return TextField(
       controller: controller,
       obscureText: isPassword,
+      textAlign: TextAlign.right, // Right alignment for Arabic
+      textDirection: TextDirection.rtl, // Right to left for Arabic
       decoration: InputDecoration(
         labelText: label,
+        alignLabelWithHint: true,
         labelStyle: TextStyle(
           color: Colors.grey[400],
           fontSize: 13,
@@ -280,94 +274,35 @@ class SignUpScreen extends StatelessWidget {
   }
 }
 
+// New Arabic version of the AlreadyHaveAnAccountWidget
+class ArabicAlreadyHaveAnAccountWidget extends StatelessWidget {
+  const ArabicAlreadyHaveAnAccountWidget({Key? key}) : super(key: key);
 
-// class SignUpScreen extends StatelessWidget {
-//   const SignUpScreen({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SafeArea(
-//       child: BlocConsumer<SignUpCubit, UserState>(
-//         listener: (context, state) {
-//           if (state is SignUpSuccess) {
-//             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-//               content: Text(state.message), 
-//             ));
-//           } else if (state is SignUpFailure) {
-//             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-//               content: Text(state.errMessage),
-//             ));
-//           }
-//         },
-//         builder: (context, state) {
-//           return Scaffold(
-//             backgroundColor: const Color(0xffEEF1F3),
-//             body: SingleChildScrollView(
-//               child: Form(
-//                 key: context.read<SignUpCubit>().signUpFormKey,
-//                 child: Column(
-//                   children: [
-//                     const PageHeading(title: 'Sign-up'),
-//                     const SizedBox(height: 16),
-//                     //! Name
-//                     CustomInputField(
-//                       labelText: 'Nom',
-//                       hintText: 'Ton nom',
-//                       isDense: true,
-//                       controller: context.read<SignUpCubit>().signUpName,
-//                     ),
-//                     const SizedBox(height: 16),
-//                     CustomInputField(
-//                       labelText: 'Prénom',
-//                       hintText: 'Ton Prénom',
-//                       isDense: true,
-//                       controller: context.read<SignUpCubit>().signUpFirstname,
-//                     ),
-//                     const SizedBox(height: 16),
-//                     CustomInputField(
-//                       labelText: 'Matricule',
-//                       hintText: 'Ton Matricule',
-//                       isDense: true,
-//                       controller: context.read<SignUpCubit>().Matricule,
-//                     ),
-//                     const SizedBox(height: 16),
-//                     CustomInputField(
-//                       labelText: 'Télephone',
-//                       hintText: 'Ton Télephone',
-//                       isDense: true,
-//                       controller: context.read<SignUpCubit>().SignupPhone,
-//                     ),
-//                     const SizedBox(height: 16),                    
-//                     CustomInputField(
-//                       labelText: 'Password',
-//                       hintText: 'Your password',
-//                       isDense: true,
-//                       obscureText: true,
-//                       suffixIcon: true,
-//                       controller: context.read<SignUpCubit>().signUpPassword,
-//                     ),
-//                     //! Confirm Password
-                    
-//                     const SizedBox(height: 22),
-//                     //!Sign Up Button
-//                     state is SignUpLoading
-//                         ? const CircularProgressIndicator()
-//                         : CustomFormButton(
-//                             innerText: 'Signup',
-//                             onPressed: () {
-//                               context.read<SignUpCubit>().signUp();
-//                             },
-//                           ),
-//                     const SizedBox(height: 18),
-//                     const AlreadyHaveAnAccountWidget(),
-//                     const SizedBox(height: 30),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          'لديك حساب بالفعل؟',
+          style: TextStyle(
+            color: Colors.grey[600],
+            fontSize: 12,
+          ),
+        ),
+        TextButton(
+          onPressed: () {
+            // Navigate to Sign In page
+          },
+          child: const Text(
+            'تسجيل الدخول',
+            style: TextStyle(
+              color: Color.fromRGBO(26, 64, 113, 1),
+              fontSize: 12,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
