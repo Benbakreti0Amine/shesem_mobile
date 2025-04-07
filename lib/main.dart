@@ -4,8 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/cubit/user_report_cubit.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/Report_page.dart';
+import 'package:happy_tech_mastering_api_with_flutter/representation/screens/onboarding.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/sign_in_screen.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/sign_up_screen.dart';
+import 'package:happy_tech_mastering_api_with_flutter/representation/screens/splashScreen.dart';
 import 'cache/cachehelper.dart';
 import 'core/api/dio_consumer.dart';
 import 'representation/cubit/user_cubit.dart';
@@ -46,6 +48,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       home: RootPage(),
+      // SplashScreen(),
       locale: const Locale('ar'), // Set locale to Arabic
       localizationsDelegates: const [
         // Add required localization delegates
