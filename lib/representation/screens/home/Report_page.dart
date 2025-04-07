@@ -12,7 +12,8 @@ class ReportScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: ListView(
+        body: 
+        ListView(
           padding: EdgeInsets.zero,
           children: [
             // Green background rectangle

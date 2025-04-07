@@ -88,60 +88,7 @@ class _RootPageState extends State<RootPage> {
           ),
         ),
 
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(60),
-          child: Padding(
-            padding: const EdgeInsets.only(
-              left: 10.0,
-              bottom: 12.0,
-              right: 10.0,
-            ),
-            child: Row(
-              children: [
-                // Search bar
-                Expanded(
-                  child: Container(
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: Color(0xFF69BB6D), 
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: TextField(
-                      textAlign: TextAlign.right,
-                      textDirection: TextDirection.rtl,
-                      decoration: InputDecoration(
-                        hintText: '...البحث عن خطة عمل',
-                        hintStyle: TextStyle(
-                          color: Colors.white.withOpacity(0.8),
-                          fontSize: 14,
-                        ),
-                        prefixIcon: Icon(Icons.search, color: Colors.white),
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(vertical: 10),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10),
-                // Menu button
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: Color(0xFF69BB6D), // Lighter green for menu button
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: IconButton(
-                    icon: Icon(Icons.menu, color: Colors.white, size: 20),
-                    onPressed: () {
-                      _scaffoldKey.currentState?.openDrawer();
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+     
       ),
       // drawer: CustomDrawer(),
       backgroundColor: Colors.white,
