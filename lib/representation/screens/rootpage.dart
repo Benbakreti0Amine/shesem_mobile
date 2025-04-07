@@ -24,7 +24,7 @@ class _RootPageState extends State<RootPage> {
     const BusPage(),
     AlertsPage(),
     const MapPage(),
-    const ReportScreen(),
+     ReportScreen(),
     GuideScreen(),
   ];
 
@@ -52,7 +52,7 @@ class _RootPageState extends State<RootPage> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Color(0xFF4CAF50), // Green color as shown in the image
+        backgroundColor: Color(0xFF44AA00), // Green color as shown in the image
         elevation: 0,
         automaticallyImplyLeading: false, // Remove default back button
         titleSpacing: 0,
