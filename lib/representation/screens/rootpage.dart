@@ -3,7 +3,6 @@ import 'package:happy_tech_mastering_api_with_flutter/representation/screens/hom
 
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/Map_page.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/Report_page.dart';
-import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/SosPage.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/alerts_page.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/guide_page.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/widgets/drawer.dart';
@@ -21,9 +20,8 @@ class _RootPageState extends State<RootPage> {
   final List<Widget> _pages = [
     HomePage(),
     AlertsPage(),
-    const MapPage(),
-    const ReportScreen(),
-    GuideScreen(),
+    const ProfilePage(),
+    const ChatScreen(),
   ];
 
   final List<BottomNavigationBarItem> _navigationItems = [
@@ -32,21 +30,18 @@ class _RootPageState extends State<RootPage> {
       label: 'Home',
     ),
     const BottomNavigationBarItem(
-      icon: Icon(Icons.warning_outlined),
-      label: 'Alertes',
+      icon: Icon(Icons.money_outlined),
+      label: 'investesemetns',
     ),
     const BottomNavigationBarItem(
-      icon: Icon(Icons.map_outlined),
-      label: 'Map',
+      icon: Icon(Icons.chat_bubble_outline),
+      label: 'chat',
     ),
     const BottomNavigationBarItem(
-      icon: Icon(Icons.description_outlined),
-      label: 'Rapports',
+      icon: Icon(Icons.person_outlined),
+      label: 'profile',
     ),
-    const BottomNavigationBarItem(
-      icon: Icon(Icons.person_outline),
-      label: 'Guide',
-    ),
+
   ];
 
   @override
@@ -70,37 +65,6 @@ class _RootPageState extends State<RootPage> {
           ],
         ),
         centerTitle: true,
-        actions: [
-          GestureDetector(
-            onTap: () { Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>  SosScreen(),
-              ),
-            ); },
-            child: Padding(
-              padding: const EdgeInsets.only(right: 16.0),
-              child: Container(
-                width: 35,
-                height: 40,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Color(0xFFFF4444),
-                ),
-                child: const Center(
-                  child: Text(
-                    'SOS',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
       drawer: AppDrawer(),
       backgroundColor: Colors.white,

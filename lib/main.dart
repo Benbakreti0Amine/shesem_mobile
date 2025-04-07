@@ -24,9 +24,7 @@ void main() {
         BlocProvider(
           create: (context) => SignUpCubit(DioConsumer(dio: Dio())),
         ),
-        BlocProvider(
-          create: (context) => ReportCubit(DioConsumer(dio: Dio())),
-        ),
+
       ],
       child: const MyApp(),
     ),
@@ -47,7 +45,7 @@ class MyApp extends StatelessWidget {
           labelLarge: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
         ),
       ),
-      home: SignUpScreen(),
+      home: RootPage(),
       locale: const Locale('ar'), // Set locale to Arabic
       localizationsDelegates: const [
         // Add required localization delegates
