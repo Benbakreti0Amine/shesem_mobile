@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/cubit/user_report_cubit.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/Report_page.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/sign_in_screen.dart';
+import 'package:happy_tech_mastering_api_with_flutter/representation/screens/sign_up_screen.dart';
 import 'cache/cachehelper.dart';
 import 'core/api/dio_consumer.dart';
 import 'representation/cubit/user_cubit.dart';
@@ -47,7 +48,7 @@ class MyApp extends StatelessWidget {
           labelLarge: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
         ),
       ),
-      home: RootPage(),
+      home: SignUpScreen(),
     );
   }
 }
