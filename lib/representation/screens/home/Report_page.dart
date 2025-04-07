@@ -598,7 +598,7 @@ class ReportScreen extends StatelessWidget {
                   icon: Icon(
                     Icons.chat_bubble_outline,
                     color: Colors.white,
-                    size: 18,
+                    size: 11,
                   ),
                   label: Text(
                     'تواصل',
