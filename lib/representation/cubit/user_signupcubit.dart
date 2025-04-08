@@ -29,22 +29,22 @@ class SignUpCubit extends Cubit<UserState> {
       final response = await api.post(
         EndPoint.signUp,
         isFromData: true,
-        data: {
-          ApiKey.nom: signUpName.text,
-          ApiKey.prenom: signUpFirstname.text,
-          "description": description.text,
-          ApiKey.password: signUpPassword.text,
-          ApiKey.phone: SignupPhone.text,
-          ApiKey.is_active: true,
-        },
         // data: {
-        //   ApiKey.nom: "signUpName.text",
-        //   ApiKey.prenom: "signUpFirstname.text",
-        //   "description": "description.text",
-        //   ApiKey.password: "signUpPassword.text",
-        //   ApiKey.phone: "55555555555",
+        //   ApiKey.nom: signUpName.text,
+        //   ApiKey.prenom: signUpFirstname.text,
+        //   "description": description.text,
+        //   ApiKey.password: signUpPassword.text,
+        //   ApiKey.phone: SignupPhone.text,
         //   ApiKey.is_active: true,
         // },
+        data: {
+          ApiKey.nom: "signUpName.text",
+          ApiKey.prenom: "signUpFirstname.text",
+          "description": "description.text",
+          ApiKey.password: "signUpPassword.text",
+          ApiKey.phone: "55555555555",
+          ApiKey.is_active: true,
+        },
       );
       final signUPModel = UserSignup.fromJson(response);
       emit(SignUpSuccess(message: signUPModel.message));

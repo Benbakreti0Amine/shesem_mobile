@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/Formoverlay.dart';
+import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/ChatScreen.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/Home_page.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/Map_page.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/Report_page.dart';
@@ -45,7 +46,7 @@ class _RootPageState extends State<RootPage>
     const HomePage(),
     AlertsPage(),
     const ProfilePage(),
-     ChatScreen(),
+     Homme(),
   ];
 
   final List<BottomNavigationBarItem> _navigationItems = [
@@ -107,7 +108,7 @@ class _RootPageState extends State<RootPage>
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
-        backgroundColor: Color(0xFF4CAF50),
+        backgroundColor: Color(0xFF43A700),
         elevation: 0,
         automaticallyImplyLeading: false,
         titleSpacing: 0,

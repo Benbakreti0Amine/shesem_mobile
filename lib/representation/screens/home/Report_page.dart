@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/ChatScreen.dart';
+import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/filters.dart';
 
-class ChatScreen extends StatelessWidget {
-  ChatScreen({Key? key}) : super(key: key);
+class Homme extends StatelessWidget {
+  Homme({Key? key}) : super(key: key);
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -10,15 +12,14 @@ class ChatScreen extends StatelessWidget {
       child: Scaffold(
         key: _scaffoldKey,
         backgroundColor: Colors.white,
-        // Remove appBar property completely
         drawer: Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
               DrawerHeader(
                 decoration: BoxDecoration(
-                  // color: Color(0xFF44AA00),
-                ),
+                    // color: Color(0xFF44AA00),
+                    ),
                 child: Text(
                   'القائمة',
                   style: TextStyle(
@@ -50,7 +51,7 @@ class ChatScreen extends StatelessWidget {
               padding: const EdgeInsets.only(left: 0.0),
               child: Container(
                 decoration: BoxDecoration(
-                  color: Color(0xFF44AA00), // Vert uni pour toute la section
+                  color: Color(0xFF43A700), // Vert uni pour toute la section
                 ),
                 child: Row(
                   children: [
@@ -68,12 +69,12 @@ class ChatScreen extends StatelessWidget {
                                 color:
                                     Colors.white), // Juste une bordure blanche
                           ),
-                          child: TextField(
+                          child: const TextField(
                             textAlign: TextAlign.right,
                             textDirection: TextDirection.rtl,
                             style: TextStyle(color: Colors.white),
                             decoration: InputDecoration(
-                              hintText: '...البحث عن خطة عمل',
+                              hintText: 'البحث عن خطة عمل',
                               hintStyle: TextStyle(
                                 color: Colors.white70,
                                 fontSize: 14,
@@ -105,7 +106,27 @@ class ChatScreen extends StatelessWidget {
                         child: IconButton(
                           icon: Icon(Icons.menu, color: Colors.white, size: 20),
                           onPressed: () {
-                            _scaffoldKey.currentState?.openDrawer();
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return FiltersPopup(
+                                  onClose: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  onApplyFilters: (filters) {
+                                    // Handle the filters here
+                                    print('Soil Type: ${filters['soilType']}');
+                                    print(
+                                        'Climate Type: ${filters['climateType']}');
+                                    print('Land Area: ${filters['landArea']}');
+
+                                    // Apply filters to your posts list
+                                    // Example: filteredPosts = applyFilters(allPosts, filters);
+                                    // setState(() {});
+                                  },
+                                );
+                              },
+                            );
                           },
                         ),
                       ),
@@ -121,7 +142,7 @@ class ChatScreen extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 children: [
                   Stack(
-                    clipBehavior: Clip.none, 
+                    clipBehavior: Clip.none,
                     children: [
                       // Rectangle vert
                       Container(
@@ -137,16 +158,18 @@ class ChatScreen extends StatelessWidget {
 
                       // Image au-dessus du rectangle
                       Positioned(
-                        top: -10, 
+                        top: -0.1,
                         left: 0,
                         right: 0,
                         child: Transform.scale(
-                          scale: 1.2,
+                          scale: 0.9,
                           child: SizedBox(
-                            height: 190,  // Augmenté pour donner plus d'espace à l'image
+                            height:
+                                150, // Augmenté pour donner plus d'espace à l'image
                             child: Image.asset(
                               'assets/images/sunny_cloud.png',
-                              fit: BoxFit.cover,  // Modifié pour mieux remplir l'espace
+                              fit: BoxFit
+                                  .cover, // Modifié pour mieux remplir l'espace
                             ),
                           ),
                         ),
@@ -154,7 +177,7 @@ class ChatScreen extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    height: 100,
+                    height: 80,
                   ),
 
                   // Post item - Styled exactly like the image
@@ -182,8 +205,8 @@ class ChatScreen extends StatelessWidget {
                             children: [
                               CircleAvatar(
                                 radius: 20,
-                                backgroundImage: AssetImage(
-                                    'assets/images/profileM.png'),
+                                backgroundImage:
+                                    AssetImage('assets/images/profileM.png'),
                               ),
                               SizedBox(width: 10),
                               Column(
@@ -239,26 +262,26 @@ class ChatScreen extends StatelessWidget {
                                 itemCount: 5,
                                 itemBuilder: (context, index) {
                                   return Image.asset(
-                                    'assets/images/post.jpg',
+                                    'assets/images/post2.jpg',
                                     fit: BoxFit.cover,
                                     width: double.infinity,
                                   );
                                 },
                               ),
                             ),
-                            
+
                             // Overlay at the bottom of the image with dots and tags
                             Positioned(
                               bottom: 0,
                               left: 0,
                               right: 0,
                               child: Container(
-                                padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 12),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                  
-                                    
                                     // Green tags on the right
                                     Row(
                                       textDirection: TextDirection.rtl,
@@ -270,12 +293,13 @@ class ChatScreen extends StatelessWidget {
                                         _buildGreenTag('أكثر من 50 هكتار'),
                                       ],
                                     ),
-                                      // Dots indicator on the left
+                                    // Dots indicator on the left
                                     Row(
                                       children: List.generate(
                                         4,
                                         (index) => Container(
-                                          margin: EdgeInsets.symmetric(horizontal: 2),
+                                          margin: EdgeInsets.symmetric(
+                                              horizontal: 2),
                                           width: 8,
                                           height: 8,
                                           decoration: BoxDecoration(
@@ -284,7 +308,8 @@ class ChatScreen extends StatelessWidget {
                                                 : Colors.white.withOpacity(0.5),
                                             shape: BoxShape.circle,
                                             border: Border.all(
-                                              color: Colors.grey.withOpacity(0.5),
+                                              color:
+                                                  Colors.grey.withOpacity(0.5),
                                               width: 1,
                                             ),
                                           ),
@@ -300,7 +325,8 @@ class ChatScreen extends StatelessWidget {
 
                         // Post title
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 8.0),
                           child: Text(
                             'سر محصول الطماطم الناجح',
                             style: TextStyle(
@@ -312,18 +338,52 @@ class ChatScreen extends StatelessWidget {
                           ),
                         ),
 
-                        // Post description
+                        // Post description with "Show more" button
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                          child: Text(
-                            'سر الحصول على محصول طماطم ناجح يبدأ بالسقي المنتظم صباحاً مما يساعد على تقوية الجذور وتفادي الأمراض. بالإضافة إلى ذلك، احترمت فترات التسميد القصوى كل 15 يوم باستخدام سماد طبيعي مخضر من بقايا عرض المزيد...',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.black87,
-                              height: 1.4,
-                            ),
+                          child: RichText(
                             textAlign: TextAlign.right,
                             textDirection: TextDirection.rtl,
+                            text: TextSpan(
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black87,
+                                height: 1.4,
+                              ),
+                              children: [
+                                TextSpan(
+                                  text:
+                                      'سر الحصول على محصول طماطم ناجح يبدأ بالسقي المنتظم صباحاً مما يساعد على تقوية الجذور وتفادي الأمراض. بالإضافة إلى ذلك، احترمت فترات التسميد القصوى كل 15 يوم باستخدام سماد طبيعي مخضر من بقايا ',
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                        // "Show more" button
+                        Padding(
+                          padding: const EdgeInsets.only(right: 16.0),
+                          child: Align(
+                            alignment: Alignment.centerRight,
+                            child: TextButton(
+                              onPressed: () {
+                                // Action when "Show more" is pressed
+                              },
+                              child: Text(
+                                'عرض المزيد...',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                ),
+                                textAlign: TextAlign.right,
+                              ),
+                              style: TextButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                minimumSize: Size(0, 30),
+                                alignment: Alignment.centerRight,
+                              ),
+                            ),
                           ),
                         ),
 
@@ -344,7 +404,19 @@ class ChatScreen extends StatelessWidget {
                               ),
                               // Contact button
                               ElevatedButton.icon(
-                                onPressed: () {},
+                                onPressed: () {
+                                  // Action when contact button is pressed
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ChatScreen(
+                                        name: 'مختاري مريم',
+                                        profileImage:
+                                            'assets/images/profileM.png',
+                                      ),
+                                    ),
+                                  );
+                                },
                                 icon: Icon(
                                   Icons.chat_bubble_outline,
                                   color: Colors.white,
@@ -362,7 +434,8 @@ class ChatScreen extends StatelessWidget {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20),
                                   ),
-                                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 8),
                                 ),
                               ),
                             ],
@@ -493,7 +566,7 @@ class ChatScreen extends StatelessWidget {
                   },
                 ),
               ),
-              
+
               // Overlay at the bottom of the image with dots and tags
               Positioned(
                 bottom: 0,
@@ -504,6 +577,17 @@ class ChatScreen extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      // Green tags on the right
+                      Row(
+                        textDirection: TextDirection.rtl,
+                        children: [
+                          _buildGreenTag('تربة ترابية'),
+                          SizedBox(width: 6),
+                          _buildGreenTag('مناخ معتدل'),
+                          SizedBox(width: 6),
+                          _buildGreenTag('أكثر من 50 هكتار'),
+                        ],
+                      ),
                       // Dots indicator on the left
                       Row(
                         children: List.generate(
@@ -525,18 +609,6 @@ class ChatScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      
-                      // Green tags on the right
-                      Row(
-                        textDirection: TextDirection.rtl,
-                        children: [
-                          _buildGreenTag('تربة ترابية'),
-                          SizedBox(width: 6),
-                          _buildGreenTag('مناخ معتدل'),
-                          SizedBox(width: 6),
-                          _buildGreenTag('أكثر من 50 هكتار'),
-                        ],
-                      ),
                     ],
                   ),
                 ),
@@ -546,7 +618,8 @@ class ChatScreen extends StatelessWidget {
 
           // Post title
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: Text(
               'سر محصول الطماطم الناجح',
               style: TextStyle(
@@ -558,18 +631,52 @@ class ChatScreen extends StatelessWidget {
             ),
           ),
 
-          // Post description
+          // Post description with "Show more" button
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Text(
-              'سر الحصول على محصول طماطم ناجح يبدأ بالسقي المنتظم صباحاً مما يساعد على تقوية الجذور وتفادي الأمراض. بالإضافة إلى ذلك، احترمت فترات التسميد القصوى كل 15 يوم باستخدام سماد طبيعي مخضر من بقايا عرض المزيد...',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.black87,
-                height: 1.4,
-              ),
+            child: RichText(
               textAlign: TextAlign.right,
               textDirection: TextDirection.rtl,
+              text: TextSpan(
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black87,
+                  height: 1.4,
+                ),
+                children: [
+                  TextSpan(
+                    text:
+                        'سر الحصول على محصول طماطم ناجح يبدأ بالسقي المنتظم صباحاً مما يساعد على تقوية الجذور وتفادي الأمراض. بالإضافة إلى ذلك، احترمت فترات التسميد القصوى كل 15 يوم باستخدام سماد طبيعي مخضر من بقايا ',
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          // "Show more" button
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {
+                  // Action when "Show more" is pressed
+                },
+                child: Text(
+                  'عرض المزيد...',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                  textAlign: TextAlign.right,
+                ),
+                style: TextButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  minimumSize: Size(0, 30),
+                  alignment: Alignment.centerRight,
+                ),
+              ),
             ),
           ),
 

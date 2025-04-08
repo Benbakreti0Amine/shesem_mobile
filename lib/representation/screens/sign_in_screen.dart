@@ -21,7 +21,7 @@ class SignInScreen extends StatelessWidget {
               const SnackBar(content: Text("تم بنجاح")),
             );
             context.read<SignInCubit>().getUserData();
-            Navigator.push(
+            Navigator.push( 
               context,
               MaterialPageRoute(
                 builder: (context) => const RootPage(),
@@ -118,7 +118,8 @@ class SignInScreen extends StatelessWidget {
                                 const SizedBox(height: 16),
                                 // Remember Me & Forgot Password Row
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       children: [
@@ -152,7 +153,13 @@ class SignInScreen extends StatelessWidget {
                                   height: 50,
                                   child: ElevatedButton(
                                     onPressed: () {
-                                      context.read<SignInCubit>().signIn();
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const RootPage(),
+                                        ),
+                                      );
                                     },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: AppColors.primary,

@@ -23,13 +23,18 @@ class SignInCubit extends Cubit<UserState> {
   signIn() async {
     emit(SignInLoading());
     try {
-      final response = await api.post(EndPoint.signIn, data: {
-        // ApiKey.email: signInEmail.text,
-        ApiKey.phone: signInPhone.text,
-        ApiKey.password: signInPassword.text,
-      });
+      final response = await api.post(EndPoint.signIn,
+          //  data: {
+          //   // ApiKey.email: signInEmail.text,
+          //   ApiKey.phone: signInPhone.text,
+          //   ApiKey.password: signInPassword.text,
+          // }
+          data: {
+            // ApiKey.email: signInEmail.text,
+            ApiKey.phone: "1",
+            ApiKey.password: "123",
+          });
       user = UserSignin.fromJson(response);
-
 
       try {
         final decodedToken = JwtDecoder.decode(user!.token);
@@ -56,9 +61,9 @@ class SignInCubit extends Cubit<UserState> {
         EndPoint.getUser(CacheHelper().getData(key: ApiKey.id)),
       );
       final user = GetUserModel.fromJson(response);
-      print(  "===============================");
-      print(user  );  
-      print(  "===============================");
+      print("===============================");
+      print(user);
+      print("===============================");
       emit(GetProfilesuccess(user: user));
     } on ServerException catch (e) {
       emit(GetprofileFailed(errMessage: e.errModel.errorMessage));
