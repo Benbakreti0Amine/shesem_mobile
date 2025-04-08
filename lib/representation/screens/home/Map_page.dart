@@ -11,10 +11,331 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Text("Map"),
+    return Scaffold(
+      key: _scaffoldKey,
+      backgroundColor: Colors.grey[100],
+      body: SafeArea(
+        child: Column(
+          children: [
+            
+            
+            // Scrollable content
+            Expanded(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  // First post card
+                  _buildPostCard(
+                    rating: '3.2',
+                    name: 'مختاري مريم',
+                    location: 'عين تموشنت، الجزائر',
+                    imagePath: 'assets/images/post2.jpg',
+                    tags: ['تربة ترابية', 'مناخ معتدل', 'أكثر من 50 هكتار'],
+                    title: 'فرصة استثمار في تنمية مشروع فلاحي',
+                    description: 'أبحث عن مستثمر أجنبي أو محلي لتوسيع مشروعي الفلاحي القائم على زراعة النخيل والأشجار المثمرة والخضار أحتاج إلى تمويل لإجراء عملية توسعة عرض المزيد...',
+                    price: '250000 د.ج',
+                  ),
+                  
+                  // Second post card
+                  _buildPostCard(
+                    rating: '2.9',
+                    name: 'وراد إسلام شرف الدين',
+                   location: 'عين تموشنت، الجزائر',
+                    imagePath: 'assets/images/post.jpg',
+                    tags: ['تربة ترابية', 'مناخ معتدل', 'أكثر من 50 هكتار'],
+                    title: 'فرصة استثمار في تنمية مشروع فلاحي',
+                    description: 'أبحث عن مستثمر أجنبي أو محلي لتوسيع مشروعي الفلاحي القائم على زراعة النخيل والأشجار المثمرة والخضار أحتاج إلى تمويل لإجراء عملية توسعة عرض المزيد...',
+                    price: '300000 د.ج',
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Color(0xFF44AA00),
+              ),
+              child: Text(
+                'القائمة',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
+                textAlign: TextAlign.right,
+              ),
+            ),
+            ListTile(
+              title: Text('الصفحة الرئيسية', textAlign: TextAlign.right),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('الإعدادات', textAlign: TextAlign.right),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Helper method to build a post card
+  Widget _buildPostCard({
+    required String rating,
+    required String name,
+    required String location,
+    required String imagePath,
+    required List<String> tags,
+    required String title,
+    required String description,
+    required String price,
+    bool showFullContent = true,
+  }) {
+    return Container(
+      margin: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 4,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Post header with rating, profile pic and name
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Row(
+              textDirection: TextDirection.rtl,
+              children: [
+                CircleAvatar(
+                  radius: 20,
+                  backgroundImage: AssetImage('assets/images/profileM.jpg'),
+                ),
+                SizedBox(width: 10),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      name,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                      textDirection: TextDirection.rtl,
+                    ),
+                    Text(
+                      location,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey,
+                      ),
+                      textDirection: TextDirection.rtl,
+                    ),
+                  ],
+                ),
+                Spacer(),
+                Row(
+                  children: [
+                    Text(
+                      rating,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                    SizedBox(width: 4),
+                    Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                      size: 20,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+
+          // Post main image with tags overlay
+          Stack(
+            children: [
+              // Image
+              Container(
+                height: 200,
+                width: double.infinity,
+                child: Image.asset(
+                  imagePath,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              
+              // Overlay at the bottom of the image with tags
+              if (tags.isNotEmpty)
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                    child: Row(
+                      textDirection: TextDirection.rtl,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: tags.map((tag) => Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                        child: _buildGreenTag(tag),
+                      )).toList(),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+
+          if (showFullContent) ...[
+            // Post title
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: Text(
+                title,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+                textAlign: TextAlign.right,
+                textDirection: TextDirection.rtl,
+              ),
+            ),
+
+            // Post description with "Show more" button
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: RichText(
+                textAlign: TextAlign.right,
+                textDirection: TextDirection.rtl,
+                text: TextSpan(
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black87,
+                    height: 1.4,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: description.replaceAll(' عرض المزيد...', ''),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            
+            // "Show more" button
+            if (description.contains('عرض المزيد'))
+              Padding(
+                padding: const EdgeInsets.only(right: 16.0),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () {
+                      // Action when "Show more" is pressed
+                    },
+                    child: Text(
+                      'عرض المزيد...',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                      textAlign: TextAlign.right,
+                    ),
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      minimumSize: Size(0, 30),
+                      alignment: Alignment.centerRight,
+                    ),
+                  ),
+                ),
+              ),
+
+            // Footer with price and contact button
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Price
+                  Text(
+                    price,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                      color: Color(0xFF44AA00),
+                    ),
+                  ),
+                  // Contact button
+                  ElevatedButton.icon(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.chat_bubble_outline,
+                      color: Colors.white,
+                      size: 18,
+                    ),
+                    label: Text(
+                      'تواصل',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF44AA00),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  // Helper method to build green tags
+  Widget _buildGreenTag(String text) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: Color(0xFF44AA00).withOpacity(0.2),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+        ),
+        textDirection: TextDirection.rtl,
+      ),
     );
   }
 }

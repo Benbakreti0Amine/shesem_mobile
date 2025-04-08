@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:happy_tech_mastering_api_with_flutter/core/static/colors.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/cubit/user_cubit.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/cubit/user_state.dart';
-import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/Aboutus.dart';
+import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/ChatScreen.dart';
 import 'package:happy_tech_mastering_api_with_flutter/representation/screens/home/profile_screen.dart';
 class AppDrawer extends StatelessWidget {
   const AppDrawer({Key? key}) : super(key: key);
@@ -71,7 +71,7 @@ class AppDrawer extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const ProfileScreen(),
+                              builder: (context) => const ProfilePage(),
                             ),
                           );
                         },
@@ -90,12 +90,7 @@ class AppDrawer extends StatelessWidget {
                         ),
                         onTap: () {
                           Navigator.pop(context);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>  AboutUsScreen(),
-                            ),
-                          );
+                      
                         },
                       ),
                       ListTile(
