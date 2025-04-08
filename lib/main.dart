@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
           labelLarge: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
         ),
       ),
-      home: RootPage(),
+      home: SplashScreen(),
       // SplashScreen(),
       locale: const Locale('ar'), // Set locale to Arabic
       localizationsDelegates: const [
